@@ -7,7 +7,7 @@ import java.io.InputStreamReader;
 public class RedesController {
 
 	public String os() {
-		return System.getProperty("os.name").trim();
+		return System.getProperty("os.name");
 	}
 
 	public void readProcess(String process) {
@@ -43,14 +43,11 @@ public class RedesController {
 	}
 
 	public void ip() {
-		readProcess("ipconfig");
-		
-		if (os() == "Windows 10") {
+		if (os().contains("Windows")) {
 			readProcess("ipconfig");
-		} else if (os() == "Linux") {
+		} else if (os().contains("Linux")) {
 			readProcess("ifconfig");
 		}
-
 	}
 
 }

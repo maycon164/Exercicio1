@@ -6,7 +6,7 @@ public class Main {
 	
 	public static void main(String [] args) {
 		RedesController rc = new RedesController();
-		//em.out.println(rc.os());
+		//stem.out.println(rc.os());
 		rc.ip();
 		
 	}
