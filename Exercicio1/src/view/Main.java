@@ -6,7 +6,8 @@ public class Main {
 	
 	public static void main(String [] args) {
 		RedesController rc = new RedesController();
-		rc.readProcess("ipconfig");
+		//em.out.println(rc.os());
+		rc.ip();
 		
 	}
 
