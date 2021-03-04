@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
@@ -10,7 +11,7 @@ public class RedesController {
 		return System.getProperty("os.name");
 	}
 
-	public void readProcess(String process) {
+	private void ListIp(String process) {
 		try {
 			Process p = Runtime.getRuntime().exec(process);
 
@@ -22,7 +23,7 @@ public class RedesController {
 			String linha = buffer.readLine();
 
 			while (linha != null) {
-				linha = buffer.readLine();
+				
 				if (linha.contains("Adaptador") || linha.contains("flags")) {
 					nomeAdaptador = linha;
 				}
@@ -30,6 +31,7 @@ public class RedesController {
 					System.out.println(nomeAdaptador);
 					System.out.println(linha);
 				}
+				linha = buffer.readLine();
 			}
 
 			buffer.close();
@@ -44,10 +46,40 @@ public class RedesController {
 
 	public void ip() {
 		if (os().contains("Windows")) {
-			readProcess("ipconfig");
+			ListIp("ipconfig");
 		} else if (os().contains("Linux")) {
-			readProcess("ifconfig");
+			ListIp("ifconfig");
 		}
 	}
 
+	public void ping() {
+		if(os().contains("Windows")) {
+			averagePing("ping -4 -n 10 www.google.com");
+		}else if(os().contains("Linux")) {
+			averagePing("ping -4 -c 10 www.google.com");	
+		}
+	}
+
+	private void averagePing(String process) {
+		Process p;
+		
+		try {
+			p = Runtime.getRuntime().exec(process);
+			InputStream fluxo = p.getInputStream();
+			InputStreamReader leitor = new InputStreamReader(fluxo);
+			BufferedReader buffer = new BufferedReader(leitor);
+			String linha = buffer.readLine();
+			String aux = "";
+			while(linha != null) {
+				aux = linha;
+				linha = buffer.readLine();
+			}
+			
+			System.out.println(aux);			
+		} catch (IOException e) {
+			System.err.println(e.getMessage());
+		}
+
+		
+	}
 }
