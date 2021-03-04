@@ -44,6 +44,7 @@ public class RedesController {
 
 	public void ip() {
 		readProcess("ipconfig");
+		
 		if (os() == "Windows 10") {
 			readProcess("ipconfig");
 		} else if (os() == "Linux") {
